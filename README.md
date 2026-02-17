@@ -6,7 +6,7 @@
 
 This project is a desktop application designed to solve the "Queens" puzzle (available on LinkedIn). The goal of the game is to place one queen in each row, column, and colored region without any two queens touching (orthogonally or diagonally).
 
-The solver implements a **Brute Force algorithm (Recursive Backtracking)** to explore possible configurations and find a valid solution.
+The solver implements a **Brute Force algorithm** to explore possible configurations and find a valid solution.
 
 ### Key Features & Technologies:
 * **GUI with PyQt5:** A user-friendly graphical interface built with PyQt5.
