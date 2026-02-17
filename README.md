@@ -21,7 +21,7 @@ To ensure the program runs correctly, it is recommended to use a virtual environ
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/samuelsondhrm/tucil1-13524001.git](https://github.com/samuelsondhrm/tucil1-13524001.git)
+git clone [https://github.com/samuelsondhrm/Tucil1-13524001.git](https://github.com/samuelsondhrm/Tucil1-13524001.git)
 cd tucil1-13524001
 ```
 
