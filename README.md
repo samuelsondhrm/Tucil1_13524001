@@ -60,7 +60,7 @@ python src/gui.py
     * **Image Mode:** Select image files (e.g., `test/tc2.png`). A popup dialog will appear asking you to specify the board size ($N$) via a slider.
 2.  **Solve:** Once the board is loaded, click the `🚀 SOLVE` button.
 3.  **Visualization:** Watch the algorithm place and remove queens in real-time (Live Update).
-4.  **Result:** A popup will confirm if a solution is found, displaying the execution time and total iterations.
+4.  **Result:** A popup will confirm if a solution is found, displaying the execution time and total iterations. User can also save the result by pushing the "Simpan" button.
 
 ## 📂 Project Structure
 ```
