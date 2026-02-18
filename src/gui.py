@@ -226,6 +226,37 @@ class MainWindow(QMainWindow):
         self.solver_thread.update_sig.connect(self.board_view.update_queen)
         self.solver_thread.finished_sig.connect(self.on_solver_finished)
         self.solver_thread.start()
+    
+    def save_solution(self):
+        if not self.grid or self.N == 0:
+            return
+
+        options = QFileDialog.Options()
+        # default save as 'solution.txt'
+        file_path, _ = QFileDialog.getSaveFileName(self, "Simpan Solusi", "solution.txt", 
+                                                 "Text Files (*.txt);;All Files (*)", options=options)
+        
+        if not file_path:
+            return
+
+        try:
+            queen_positions = set(self.board_view.queens)
+            
+            with open(file_path, 'w') as f:
+                for r in range(self.N):
+                    row_chars = []
+                    for c in range(self.N):
+                        if (r, c) in queen_positions:
+                            row_chars.append('#')
+                        else:
+                            row_chars.append(self.grid[r][c])
+                    
+                    f.write("".join(row_chars) + "\n")
+            
+            QMessageBox.information(self, "Berhasil", f"File berhasil disimpan di:\n{file_path}")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Gagal menyimpan file:\n{str(e)}")
 
     @pyqtSlot(bool, int, float)
     def on_solver_finished(self, success, iterations, duration_ms):
@@ -237,11 +268,24 @@ class MainWindow(QMainWindow):
         if success:
             self.lbl_status.setText("SOLUSI DITEMUKAN!")
             self.lbl_status.setStyleSheet("color: green; font-size: 14px;")
-            QMessageBox.information(self, "Success", f"Selesai dalam {duration_ms:.2f} ms dengan iterasi sebanyak {iterations} kali")
+            
+            msg_box = QMessageBox(self)
+            msg_box.setWindowTitle("Sukses")
+            msg_box.setText(f"Solusi ditemukan!\n\nWaktu: {duration_ms:.2f} ms\nIterasi: {iterations}")
+            msg_box.setIcon(QMessageBox.Information)
+            
+            btn_save = msg_box.addButton("Simpan", QMessageBox.ActionRole)
+            btn_ok = msg_box.addButton("Tutup", QMessageBox.AcceptRole)
+            
+            msg_box.exec_()
+            
+            if msg_box.clickedButton() == btn_save:
+                self.save_solution()
+            
         else:
             self.lbl_status.setText("TIDAK ADA SOLUSI")
             self.lbl_status.setStyleSheet("color: red; font-size: 14px;")
-            QMessageBox.warning(self, "Failed", "Tidak ada solusi.")
+            QMessageBox.warning(self, "Gagal", "Maaf, konfigurasi ini tidak memiliki solusi.")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
